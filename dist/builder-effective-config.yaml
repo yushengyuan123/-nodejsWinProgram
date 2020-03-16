@@ -1,0 +1,7 @@
+directories:
+  output: dist
+  buildResources: build
+appId: myEXE
+mac:
+  category: ' your.app.category.type '
+electronVersion: 8.1.1
