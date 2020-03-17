@@ -1,4 +1,4 @@
-owner: electron
-repo: electron-quick-start
+owner: yushengyuan123
+repo: '-nodejsWinProgram'
 provider: github
-updaterCacheDirName: statistics-updater
+updaterCacheDirName: a-updater

@@ -1,8 +1,5 @@
 const fs = require('fs')
 const path = require('path')
-
-console.log('哈哈')
-
 /**
  * 根据不同要求返回文件不同的信息
  * @param filename
@@ -51,4 +48,4 @@ let getLine = function (txtInfo) {
     return txtInfo.toString().split('\n').length
 }
 
-// readFile()()
+module.exports = readFile

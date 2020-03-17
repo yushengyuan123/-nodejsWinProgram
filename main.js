@@ -4,6 +4,7 @@ const path = require('path')
 
 console.log('fuck')
 console.log(__dirname)
+console.log('nihao')
 
 // function createWindow () {
 //   // Create the browser window.
@@ -25,7 +26,30 @@ console.log(__dirname)
 // // This method will be called when Electron has finished
 // // initialization and is ready to create browser windows.
 // // Some APIs can only be used after this event occurs.
-// app.on('ready', createWindow)
+
+
+//process.argv 第一个参数是路径，第二个参数才是window传入的参数
+app.on('ready', function () {
+    console.log(process.argv)
+    let funcParam = process.argv[1]
+    if(funcParam !== '-c' || funcParam !== '-w' || funcParam !== '-l') {
+        console.log('请检查你的参数输入')
+    } else {
+        //-c 返回文件file.c的字符数 -w 返回词的数目 -l返回行数
+        switch (funcParam) {
+            case '-c': {
+                break
+            }
+            case '-w': {
+                break
+            }
+            case '-l': {
+                break
+            }
+            default: break
+        }
+    }
+})
 //
 // // Quit when all windows are closed.
 // app.on('window-all-closed', function () {
