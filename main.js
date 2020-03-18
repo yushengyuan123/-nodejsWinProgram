@@ -1,6 +1,7 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
+const FileHandler = require('./utils/readFile')
 
 console.log('fuck')
 console.log(__dirname)
@@ -23,30 +24,35 @@ console.log('nihao')
 //   // mainWindow.webContents.openDevTools()
 // }
 //
-// // This method will be called when Electron has finished
-// // initialization and is ready to create browser windows.
-// // Some APIs can only be used after this event occurs.
-
 
 //process.argv 第一个参数是路径，第二个参数才是window传入的参数
 app.on('ready', function () {
-    console.log(process.argv)
     let funcParam = process.argv[1]
-    if(funcParam !== '-c' || funcParam !== '-w' || funcParam !== '-l') {
-        console.log('请检查你的参数输入')
+    let fileParam = process.argv[2]
+    if(funcParam !== '-c' && funcParam !== '-w' && funcParam !== '-l') {
+        throw new Error('please check your params input')
     } else {
-        //-c 返回文件file.c的字符数 -w 返回词的数目 -l返回行数
-        switch (funcParam) {
-            case '-c': {
-                break
+        let pathFile = FileHandler.findFile(fileParam, '../')
+        console.log(pathFile)
+        if(pathFile !== false) {
+            //-c 返回文件file.c的字符数 -w 返回词的数目 -l返回行数
+            switch (funcParam) {
+                case '-c': {
+                    FileHandler.readFile(pathFile, '-c')
+                    break
+                }
+                case '-w': {
+                    FileHandler.readFile(pathFile, '-w')
+                    break
+                }
+                case '-l': {
+                    FileHandler.readFile(pathFile, '-l')
+                    break
+                }
+                default: break
             }
-            case '-w': {
-                break
-            }
-            case '-l': {
-                break
-            }
-            default: break
+        } else {
+            throw new Error('The file is not found')
         }
     }
 })

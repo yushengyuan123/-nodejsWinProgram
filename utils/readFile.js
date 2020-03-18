@@ -1,29 +1,73 @@
 const fs = require('fs')
 const path = require('path')
+const _ = require('underscore')
 /**
  * 根据不同要求返回文件不同的信息
  * @param filename
+ * @param sort
  * @returns {Function}
  */
-let readFile = function (filename) {
-    return function() {
-        fs.readFile('test.txt', function (err, data) {
-            if (err) {
-                return console.error(err);
+let readFile = function (filename, sort) {
+    let name = getFileName(filename)
+    fs.readFile(filename, function (err, data) {
+        if (err) {
+            console.error(err);
+            return false
+        }
+        switch (sort) {
+            case '-l': {
+                console.log(name + " file's number of row is " + getLine(data.toString()))
+                break
             }
-            getString(data.toString())
-        });
+            case '-w': {
+                console.log(name + " file's number of words is " + getWords(data.toString()))
+                break
+            }
+            case '-c': {
+                console.log(name + " file's number of string is " + getString(data.toString()))
+            }
+        }
+    });
+}
+
+
+//从根目录开始查找，查找文件所在的目录
+//todo 看看怎么优化能够支持延申搜索文件
+let findFile = function (filename, path) {
+    let currentPath = fs.readdirSync(path)
+    console.log(currentPath)
+    //这里是调用了underscore的find函数
+    let temp = _.find(currentPath, function (file) {
+        return file === filename
+    })
+    console.log('temp' + temp)
+    if (temp === void 0) {
+        return false
+    } else {
+        return path + filename
+        // currentPath.forEach(function (file) {
+        //     if(!findFile(filename, './' + file)) {
+        //
+        //     }
+        // })
+        // console.log(temp)
     }
+}
+
+//获取文件的名字
+let getFileName = function(pathStr) {
+    let position = pathStr.lastIndexOf('/')
+    return pathStr.slice(position + 1, pathStr.length)
 }
 
 //获取文件英文字母个数
 let getString = function (str) {
-    if(typeof str !== "string") {
+    if (typeof str !== "string") {
         throw new Error('the param is not an string type!')
     }
     let num = 0
-    let newStr = str.replace(/\s+/gi," ").replace(/\n|\r|^\s+|\s+$/gi,"").split(' ')
-    for(let i = 0; i < newStr.length; i++) {
+    let newStr = str.replace(/\s+/gi, " ").replace(/\n|\r|^\s+|\s+$/gi, "").split(' ')
+    for (let i = 0; i < newStr.length; i++) {
         num += newStr[i].length
     }
     console.log(num)
@@ -31,21 +75,24 @@ let getString = function (str) {
 }
 
 //获取单词数,换行算接入上一行的单词
-let getWords = function(txtInfo) {
-    if(typeof txtInfo !== "string") {
+let getWords = function (txtInfo) {
+    if (typeof txtInfo !== "string") {
         throw new Error('the param is not an string type!')
     }
-    console.log(txtInfo.replace(/\s+/gi," ").replace(/\n|\r|^\s+|\s+$/gi,"").split(' ').length)
-    return txtInfo.replace(/\s+/gi," ").replace(/\n|\r|^\s+|\s+$/gi,"").split(' ').length
+    console.log(txtInfo.replace(/\s+/gi, " ").replace(/\n|\r|^\s+|\s+$/gi, "").split(' ').length)
+    return txtInfo.replace(/\s+/gi, " ").replace(/\n|\r|^\s+|\s+$/gi, "").split(' ').length
 }
 
 
 //获取文件行数
 let getLine = function (txtInfo) {
-    if(!txtInfo instanceof Array) {
-        throw new Error('the param is not an array type!')
+    if (typeof txtInfo !== "string") {
+        throw new Error('the param is not an string type!')
     }
     return txtInfo.toString().split('\n').length
 }
 
-module.exports = readFile
+module.exports = {
+    readFile: readFile,
+    findFile: findFile
+}

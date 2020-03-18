@@ -6,10 +6,16 @@
   "build": {
     "appId": "com.xxx.app",
     "mac": {
-      "target": ["dmg","zip"]
+      "target": [
+        "dmg",
+        "zip"
+      ]
     },
     "win": {
-      "target": ["nsis","zip"]
+      "target": [
+        "nsis",
+        "zip"
+      ]
     }
   },
   "scripts": {
@@ -25,5 +31,8 @@
   "author": "Syn.Y",
   "devDependencies": {
     "electron": "^8.1.1"
+  },
+  "dependencies": {
+    "underscore": "^1.9.2"
   }
 }
