@@ -1,0 +1,50 @@
+.center-container {
+    height: 250px;
+    width: 400px;
+    position: absolute;
+    left: 50%;
+    margin-left: -200px;
+    top:30%;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 10px #ccc;
+    border: 1px solid black;
+}
+
+.line {
+    height: 1px;
+    width: 90%;
+    background-color: #b4aaaa;
+    margin: auto auto 24px;
+}
+
+.title {
+    height: 20px;
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.file-name-container {
+    height: 30px;
+    width: 100%;
+    text-align: center;
+}
+
+.file-title {
+    display: inline-block;
+    height: 100%;
+    width: 20%;
+    padding-left: 20px;
+    text-align: left;
+    line-height: 30px;
+}
+
+.file-name {
+    display: inline-block;
+    height: 100%;
+    width: 20%;
+    text-align: left;
+    line-height: 30px;
+}

@@ -5,13 +5,30 @@
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <title>Hello World!</title>
+    <link rel="stylesheet" href="./css/index.css" />
+    <title>Program Statistic</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
-    <div>fuck</div>
+   <div class="center-container">
+     <div class="title">PROGRAM STATISTIC</div>
+     <div class="line"></div>
+     <div class="file-name-container">
+       <div class="file-title">file:</div>
+       <div class="file-name" id="file">haha.c</div>
+     </div>
+     <div class="file-name-container">
+       <div class="file-title">strings:</div>
+       <div class="file-name" id="strings">12</div>
+     </div>
+     <div class="file-name-container">
+       <div class="file-title">rows:</div>
+       <div class="file-name" id="rows">12</div>
+     </div>
+     <div class="file-name-container">
+       <div class="file-title">words:</div>
+       <div class="file-name" id="words">12</div>
+     </div>
+   </div>
   </body>
+  <script src="./renderer.js"></script>
 </html>

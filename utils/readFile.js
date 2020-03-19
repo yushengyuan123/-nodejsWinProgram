@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const _ = require('underscore')
+const Result = require('./Result')
 /**
  * 根据不同要求返回文件不同的信息
  * @param filename
@@ -8,26 +9,41 @@ const _ = require('underscore')
  * @returns {Function}
  */
 let readFile = function (filename, sort) {
-    let name = getFileName(filename)
-    fs.readFile(filename, function (err, data) {
-        if (err) {
-            console.error(err);
-            return false
-        }
-        switch (sort) {
-            case '-l': {
-                console.log(name + " file's number of row is " + getLine(data.toString()))
-                break
+    return new Promise(((resolve, reject) => {
+        let name = getFileName(filename)
+        fs.readFile(filename, function (err, data) {
+            if (err) {
+                console.error(err);
+                reject(Result(false, null, err))
+                return false
             }
-            case '-w': {
-                console.log(name + " file's number of words is " + getWords(data.toString()))
-                break
+            let dataStr = data.toString()
+            switch (sort) {
+                case '-l': {
+                    let rows = getLine(dataStr)
+                    console.log(name + " file's number of row is " + rows)
+                    resolve(Result(true, rows))
+                    break
+                }
+                case '-w': {
+                    let words = getWords(dataStr)
+                    console.log(name + " file's number of words is " + words)
+                    resolve(Result(true, words))
+                    break
+                }
+                case '-c': {
+                    let str = getString(dataStr)
+                    resolve(Result(true, str))
+                    console.log(name + " file's number of string is " + str)
+                }
+                default: {
+                    reject(Result(false, null, null))
+                    break
+                }
             }
-            case '-c': {
-                console.log(name + " file's number of string is " + getString(data.toString()))
-            }
-        }
-    });
+        });
+    }))
+
 }
 
 
