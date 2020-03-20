@@ -6,8 +6,7 @@
     margin-left: -200px;
     top:30%;
     border-radius: 20px;
-    box-shadow: 0 0 10px 10px #ccc;
-    border: 1px solid black;
+    box-shadow: 0 0 10px 5px #ccc;
 }
 
 .line {
@@ -15,6 +14,12 @@
     width: 90%;
     background-color: #b4aaaa;
     margin: auto auto 24px;
+}
+
+.text {
+    background: linear-gradient(to right, red, blue);
+    -webkit-background-clip: text;
+    color: transparent;
 }
 
 .title {

@@ -35,6 +35,7 @@ let readFile = function (filename, sort) {
                     let str = getString(dataStr)
                     resolve(Result(true, str))
                     console.log(name + " file's number of string is " + str)
+                    break
                 }
                 default: {
                     reject(Result(false, null, null))
@@ -46,32 +47,50 @@ let readFile = function (filename, sort) {
 
 }
 
-
 //从根目录开始查找，查找文件所在的目录
 //todo 看看怎么优化能够支持延申搜索文件
-let findFile = function (filename, path) {
-    let currentPath = fs.readdirSync(path)
-    console.log(currentPath)
+let findFile = function (filename, filepath) {
+    let currentPath = fs.readdirSync(filepath)
     //这里是调用了underscore的find函数
     let temp = _.find(currentPath, function (file) {
         return file === filename
     })
-    console.log('temp' + temp)
     if (temp === void 0) {
-        return false
-    } else {
-        return path + filename
-        // currentPath.forEach(function (file) {
-        //     if(!findFile(filename, './' + file)) {
-        //
+        throw new Error('path error')
+        // let result = _.map(currentPath, (files) => {
+        //     let filedir = path.join(filepath, files);
+        //     if(fs.statSync(filedir).isDirectory()) {
+        //         console.log(files)
+        //         findFile()
+        //         return files === filename
         //     }
         // })
-        // console.log(temp)
+        // if(result.length === 0) {
+        //     return false
+        // } else {
+        //     return result
+        // }
+    } else {
+        return filepath + filename
     }
 }
 
+// findFile('test.txt', '../')
+
+let findTest = function () {
+    fs.readdir('../', function (err, files) {
+        if (err) {
+            return
+        }
+        files.forEach(function (filename) {
+            let filedir = path.join('../', filename);
+            console.log(filedir)
+        })
+    })
+}
+
 //获取文件的名字
-let getFileName = function(pathStr) {
+let getFileName = function (pathStr) {
     let position = pathStr.lastIndexOf('/')
     return pathStr.slice(position + 1, pathStr.length)
 }
